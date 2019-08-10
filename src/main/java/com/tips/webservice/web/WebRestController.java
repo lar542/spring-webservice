@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tips.webservice.domain.posts.PostsRepository;
+import com.tips.webservice.dto.posts.PostsSaveRequestDto;
+import com.tips.webservice.service.PostsService;
 
 import lombok.AllArgsConstructor;
 
@@ -13,7 +15,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor //모든 필드를 인자값으로하는 생성자 생성
 public class WebRestController {
 	
-	private PostsRepository postsRepository; //생성자를 통해 빈 객체 주입
+	private PostsService postsService; //생성자를 통해 빈 객체 주입
 	
 	/*
 	 * 생성자를 Lombok 어노테이션을 통해 생성한 이유
@@ -29,7 +31,7 @@ public class WebRestController {
 	}
 	
 	@PostMapping("/posts")
-	public void savePosts(@RequestBody PostsSaveRequestDto dto) {
-		postsRepository.save(dto.toEntity());
+	public Long savePosts(@RequestBody PostsSaveRequestDto dto) {
+		return postsService.save(dto);
 	}
 }
